@@ -18,8 +18,7 @@ const Landing = () => (
       </div>
     </section>
    </section>
- );
-  </section>
-);
 
+ );
+ 
 export default Landing;
