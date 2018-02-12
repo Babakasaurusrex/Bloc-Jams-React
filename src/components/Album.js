@@ -1,13 +1,12 @@
 import React, {Component} from 'react';
-import albumData from './../data/albums';
+import albumData from './../data/albums.js';
 
 class Album extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
 
-
-    const album = albumData.find(album => {
-      return album.slug === this.props.match.params.slug
+    const album = albumData.find( album => {
+      return album.slug === this.props.match.params.slug;
     });
 
     this.state = {
@@ -21,41 +20,42 @@ class Album extends Component {
   }
 
 
-  play() {
+  play(){
     this.audioElement.play();
-    this.setState({ isPlaying: true });
+    this.setState({isPlaying: true});
   }
 
-  pause() {
+  pause(){
     this.audioElement.pause();
-    this.setState ({ isPlaying: false });
+    this.setState({isPlaying: false});
   }
 
-  setSong() {
+  setSong(song){
     this.audioElement.src = song.audioSrc;
-    this.setState({ currentSong: song });
+    this.setState({currentSong: song});
   }
 
-  handleSongClick(song) {
-    const isSameSong= this.state.currentSong === song;
-    if (this.state.isPlaying && isSameSong) {
+  handleSongClick(song){
+    const isSameSong = this.state.currentSong === song;
+    if(this.state.isPlaying && isSameSong){
       this.pause();
     } else {
-      if (!isSameSong) { this.setSong(song); }     
+      if(!isSameSong){ this.setSong(song) }
       this.play();
     }
   }
+
 
 
   render() {
     return (
       <section className="album">
         <section id="album-info">
-          <img id="album-cover-art" src={this.state.album.albumCover} />
+        <img id="album-cover-art" src={this.state.album.albumCover}  alt="album cover pictures"/>
           <div className="album-details">
-            <h1 id="album-title">{this.state.album.title}</h1>
-            <h2 className="artist">{this.state.album.artist}</h2>
-            <div id="release-info">{this.state.album.releaseInfo}</div>
+          <h1 id="album-title">{this.state.album.title}</h1>
+          <h2 className="artist">{this.state.album.artist}</h2>
+          <div id="release-info">{this.state.album.releaseInfo}</div>
           </div>
         </section>
 
@@ -66,7 +66,7 @@ class Album extends Component {
             <col id="song-duration-column" />
           </colgroup>
           <tbody>
-            {this.state.album.songs.map( (song, index) => (
+            {this.state.album.songs.map((song, index) => (
               <tr className="song" key={index} onClick={() => this.handleSongClick(song)} >
                 <td className="song-actions">
                   <button>
@@ -84,5 +84,5 @@ class Album extends Component {
       </section>
      );
    }
- }
+ };
 export default Album;
