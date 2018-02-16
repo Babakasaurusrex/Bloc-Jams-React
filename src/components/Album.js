@@ -63,7 +63,7 @@ class Album extends Component {
   }
 
   formatTime(seconds) {
-    if (isNaN(seconds)) { return "0:00"; }
+    if (isNaN(seconds)) { return "0:0"; }
     const wholeSeconds = Math.floor(seconds);
     const minutes = Math.floor(wholeSeconds / 60);
     const remainingSeconds = wholeSeconds % 60;

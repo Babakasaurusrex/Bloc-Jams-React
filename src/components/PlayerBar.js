@@ -31,3 +31,5 @@ import React, { Component } from 'react';
  }
  
  export default PlayerBar;
+
+ //Something went wrong so im just adding this
