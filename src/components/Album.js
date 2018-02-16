@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import albumData from './../data/albums.js';
+import PlayerBar from './PlayerBar';
 
 class Album extends Component {
   constructor(props) {
@@ -45,6 +46,35 @@ class Album extends Component {
     }
   }
 
+  handlePrevClick() {
+      const currentIndex = this.state.album.songs.findIndex(song => this.state.currentSong === song);
+      const newIndex = Math.max(0, currentIndex - 1);
+      const newSong = this.state.album.songs[newIndex];
+      this.setSong(newSong);
+      this.play(newSong);
+  }
+
+  handleNextClick() {
+    const currentIndex = this.state.album.songs.findIndex(song => this.state.currentSong === song);
+    const newIndex = Math.min((this.state.album.songs.length - 1), currentIndex + 1);
+    const newSong = this.state.album.songs[newIndex];
+    this.setSong(newSong);
+    this.play(newSong);
+  }
+
+  formatTime(seconds) {
+    if (isNaN(seconds)) { return "0:00"; }
+    const wholeSeconds = Math.floor(seconds);
+    const minutes = Math.floor(wholeSeconds / 60);
+    const remainingSeconds = wholeSeconds % 60;
+    let output = minutes + ':';
+    if (remainingSeconds < 10) {
+      output += '0';
+    }
+    output += remainingSeconds;
+    return output;
+  }
+
 
 
   render() {
@@ -76,11 +106,19 @@ class Album extends Component {
                   </button>
                 </td>
                 <td className="song-title">{song.title}</td>
-                <td className="song-duration">{this.formatTime(song.duration)}</td>
+                <td className="song-duration"> {this.formatTime(song.duration)}</td>
               </tr>
             ))}
           </tbody>
          </table>
+         <PlayerBar
+           isPlaying={this.state.isPlaying}
+           currentSong={this.state.currentSong}
+           handleSongClick={() => this.handleSongClick(this.state.currentSong)}
+           handlePrevClick={() => this.handlePrevClick()}
+           handleNextClick={() => this.handleNextClick()}
+         />
+
       </section>
      );
    }
